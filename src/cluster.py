@@ -14,10 +14,12 @@ clusters = {}
 def distance(data, prototype):
     pass
 
+
 for i in range(n_r):
     # 1. initialization
     for z in range(k):
         prototypes[z] = dataset[random.randint(0, len(dataset) - 1)]
+        clusters[z] = []
         
     for j in range(n_i):
         # 2.1. allocation
@@ -26,10 +28,17 @@ for i in range(n_r):
             for k in prototypes.keys():
                 dist[k] = distance(data, prototypes[k])
             # get the minimun of dist
+            dst = dict(map(lambda item: (item[1],item[0]),dist.items()))
+            min_k = dst[min(dst.keys())]
             # set this data to prototype (clusters)
-        
+            clusters[min_k].append(data)
+            
         # 2.2. representation
         for z in range(k):
-            # for all elements in cluster z
-            # 
-            pass
+            c = {}
+            for elem_base in clusters[z]:
+                dist = 0
+                for elem_for in clusters[z]:
+                    dist += distance(elem_for, elem_base)
+                c[elem_base] = dist
+        
